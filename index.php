@@ -121,7 +121,7 @@ $pass = '8398991';
 $db = new PDO('mysql:host=localhost;dbname=u20236', $user, $pass, array(PDO::ATTR_PERSISTENT => true));
 try {
 $stmt = $db->prepare("INSERT INTO application (name, year, powers, bio, gender, email, bodyparts) VALUES (?, ?, ?, ?, ?, ?, ?)");
-$stmt->execute(array($_POST['name'], intval($year), implode(',',$_POST['powers']), $_POST['bio'], intval($_POST['gender']), $_POST['email'], intval($_POST['bodyparts'])));
+$stmt->execute(array($_POST['name'], intval($year), implode(',',$_POST['superpowers']), $_POST['bio'], intval($_POST['gender']), $_POST['email'], intval($_POST['limb'])));
 }
 catch(PDOException $e){
   print('Error : ' . $e->getMessage());
