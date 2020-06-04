@@ -1,9 +1,9 @@
 <?php
 header('Content-Type: text/html; charset=UTF-8');
 ?>
-
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <title>Форма</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -14,25 +14,19 @@ header('Content-Type: text/html; charset=UTF-8');
 </head>
 <body class="container">
 
-$ability_labels = [1 => 'Вода', 2 => 'Земля', 3 => 'Огонь' 4 => 'Воздух'];
+<?php
+$ability_labels = [1 => 'Вода', 2=> 'Земля', 3=> 'Огонь'];
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   if (!empty($_GET['save'])) {
-    print('<div class="row justify-content-md-center p-4">Спасибо результаты, сохранены<br></div>');
-  }
-  include('form.php');
-  exit();
-}
-
-$ab = [1 => 'Вода', 2 => 'Земля', 3 => 'Огонь' 4 => 'Воздух'];
-if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-  if (!empty($_GET['save'])) {
-    print('<div class="row justify-content-md-center p-4">Спасибо результаты, сохранены<br></div>');
+    print('<div class="row justify-content-md-center p-4">Спасибо, результаты сохранены.<br></div>');
   }
   include('form.php');
   exit();
 }
 
 $errors = FALSE;
+
+?>
 <div class="row justify-content-md-center p-4">
 <div class="col-12 col-md-6 jumbotron">
 <?php
@@ -95,7 +89,7 @@ else if($_POST['limb']<1 || $_POST['limb']>4)
 
 
 $ability_data = array_keys($ability_labels);
-if (empty($_POST['superpowers'])) {
+if (empty($_POST['powers'])) {
     print('Выберите способность.<br/>');
     $errors = TRUE;
 }
@@ -153,6 +147,7 @@ header('Location: ?save=1');
 
 ?>
 </body>
+</html>
 
 
 
