@@ -1,80 +1,158 @@
 <?php
-/**
- * Интернет-программирование. Задача 8.
- * Реализовать скрипт на веб-сервере на PHP или другом языке,
- * сохраняющий в XML-файл заполненную форму задания 7. При
- * отправке формы на сервере создается новый файл с уникальным именем.
- */
-
-// Отправляем браузеру правильную кодировку,
-// файл index.php должен быть в кодировке UTF-8 без BOM.
 header('Content-Type: text/html; charset=UTF-8');
+?>
 
-// В суперглобальном массиве $_SERVER PHP сохраняет некторые заголовки запроса HTTP
-// и другие сведения о клиненте и сервере, например метод текущего запроса $_SERVER['REQUEST_METHOD'].
+!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>Форма</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css"
+        integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+</head>
+<body class="container">
+
+$ability_labels = [1 => 'Вода', 2 => 'Земля', 3 => 'Огонь' 4 => 'Воздух'];
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-  // В суперглобальном массиве $_GET PHP хранит все параметры, переданные в текущем запросе через URL.
   if (!empty($_GET['save'])) {
-    // Если есть параметр save, то выводим сообщение пользователю.
-    print('Спасибо, результаты сохранены.');
+    print('<div class="row justify-content-md-center p-4">Спасибо результаты, сохранены<br></div>');
   }
-  // Включаем содержимое файла form.php.
   include('form.php');
-  // Завершаем работу скрипта.
   exit();
 }
-// Иначе, если запрос был методом POST, т.е. нужно проверить данные и сохранить их в XML-файл.
 
-// Проверяем ошибки.
+$ab = [1 => 'Вода', 2 => 'Земля', 3 => 'Огонь' 4 => 'Воздух'];
+if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+  if (!empty($_GET['save'])) {
+    print('<div class="row justify-content-md-center p-4">Спасибо результаты, сохранены<br></div>');
+  }
+  include('form.php');
+  exit();
+}
+
 $errors = FALSE;
-if (empty($_POST['fio'])) {
+<div class="row justify-content-md-center p-4">
+<div class="col-12 col-md-6 jumbotron">
+<?php
+
+
+if (empty($_POST['name'])) {
   print('Заполните имя.<br/>');
   $errors = TRUE;
 }
-
-// *************
-// Тут необходимо проверить правильность заполнения всех остальных полей.
-// *************
-
-if ($errors) {
-  // При наличии ошибок завершаем работу скрипта.
-  exit();
+else if (!preg_match('/^[а-яА-Я ]+$/u', $_POST['name'])) {
+  print('Недопустимые символы в имени.<br/>');
+  $errors = TRUE;
 }
 
-// Сохранение в базу данных.
 
-$user = 'db';
-$pass = '123';
-$db = new PDO('mysql:host=localhost;dbname=test', $user, $pass, array(PDO::ATTR_PERSISTENT => true));
+if(empty($_POST['email'])){
+    print('Укажите email<br>');
+    $errors = TRUE;
+}else if(!preg_match('/^.*\@.*\..+$/u', $_POST['email'])){
+    print('Неверно указан email<br>');
+    $errors = TRUE;
+}
 
-// Подготовленный запрос. Не именованные метки.
+
+if (empty($_POST['year'])) {
+    print('Заполните год.<br/>');
+    $errors = TRUE;
+}
+else {
+    $year = $_POST['year'];
+    if (!(is_numeric($year) && intval($year) >= 1900 && intval($year) <= 2020)) {
+        print('Укажите корректный год.<br/>');
+        $errors = TRUE;
+    }
+}
+
+
+if(!isset($_POST['gender']))
+{
+    print('Выберите пол<br>');
+    $errors = TRUE;
+}
+else if(intval($_POST['gender'])<0 || intval($_POST['gender'])>1)
+{
+    print('Неверно указан пол<br>');
+    $errors = TRUE;
+}
+
+
+if(empty($_POST['limb']))
+{
+    print('Выберите количество конечностей<br>');
+    $errors = TRUE;
+}
+else if($_POST['limb']<1 || $_POST['limb']>4)
+{
+    print('Неверное количество конечностей<br>');
+    $errors = TRUE;
+}
+
+
+$ability_data = array_keys($ability_labels);
+if (empty($_POST['superpowers'])) {
+    print('Выберите способность.<br/>');
+    $errors = TRUE;
+}
+else{
+    $abilities = $_POST['superpowers'];
+    foreach ($abilities as $ability) {
+        if (!in_array($ability, $ability_data)) {
+            print('Плохая способность!<br/>');
+            $errors = TRUE;
+        }
+    }
+}
+
+
+if (empty($_POST['bio'])){
+    print('Заполните биографию<br>');
+    $errors = TRUE;
+}
+
+
+if(empty($_POST['agreed']))
+{
+    print('Вы не ознакомились с контрактом<br>');
+    $errors = TRUE;
+}else if($_POST['agreed']!=="on"){
+    print('Вы не ознакомились с контрактом<br>');
+    $errors = TRUE;
+}
+if ($errors) {
+    print('<a href="index.php">Назад</a><br>');
+}
+?>
+
+</div>
+</div>
+
+<?php
+if ($errors) {
+    exit();
+}
+
+$user = 'u20236';
+$pass = '8398991';
+$db = new PDO('mysql:host=localhost;dbname=u20236', $user, $pass, array(PDO::ATTR_PERSISTENT => true));
 try {
-  $stmt = $db->prepare("INSERT INTO application (name) SET name = ?");
-  $stmt -> execute(array('fio'));
+$stmt = $db->prepare("INSERT INTO application (name, email, year, gender, limb, superpowers, bio) VALUES (?, ?, ?, ?, ?, ?, ?)");
+$stmt->execute(array($_POST['name'], $_POST['email'], intval($_POST['year']), intval($_POST['gender']),intval($_POST['limb']), implode(',',$_POST['superpowers']), $_POST['bio'],));
 }
 catch(PDOException $e){
   print('Error : ' . $e->getMessage());
   exit();
 }
 
-//  stmt - это "дескриптор состояния".
- 
-//  Именованные метки.
-//$stmt = $db->prepare("INSERT INTO test (label,color) VALUES (:label,:color)");
-//$stmt -> execute(array('label'=>'perfect', 'color'=>'green'));
- 
-//Еще вариант
-/*$stmt = $db->prepare("INSERT INTO users (firstname, lastname, email) VALUES (:firstname, :lastname, :email)");
-$stmt->bindParam(':firstname', $firstname);
-$stmt->bindParam(':lastname', $lastname);
-$stmt->bindParam(':email', $email);
-$firstname = "John";
-$lastname = "Smith";
-$email = "john@test.com";
-$stmt->execute();
-*/
-
-// Делаем перенаправление.
-// Если запись не сохраняется, но ошибок не видно, то можно закомментировать эту строку чтобы увидеть ошибку.
-// Если ошибок при этом не видно, то необходимо настроить параметр display_errors для PHP.
 header('Location: ?save=1');
+
+?>
+</body>
+
+
+
