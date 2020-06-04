@@ -1,3 +1,5 @@
+<html lang=ru>
+</body>
 <div class="row justify-content-md-center p-2">
     <form method="POST" class="col-12 col-md-6 align-self-center jumbotron p-4">
     <h1 class="text-center">Форма</h1>
@@ -46,7 +48,6 @@
         <option value=1>Вода</option>
         <option value=2>Земля</option>
         <option value=3>Огонь</option>
-        <option value=4>Воздух</option>
       </select>
       <br>
       </div>
@@ -54,10 +55,10 @@
       <div class="form-group">
       <textarea name="bio" class="form-control"></textarea>
       <br>
-      <div class="form-check"
+      <div class="form-check">
       <label for="agreed" class="form-check-label">
         <input type="checkbox" name="agreed" id="agreed" class="form-check-input" required>
-        C контрактом ознакомлен
+        с контрактом ознакомлен
       </label>
       </div>
       <br>
@@ -65,4 +66,6 @@
       </div>
     </form>
 </div>
+</body>
+</html>
 
