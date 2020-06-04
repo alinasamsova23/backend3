@@ -56,12 +56,12 @@ else {
 }
 
 $ability_data = array_keys($ability_labels);
-if (empty($_POST['powers'])) {
+if (empty($_POST['superpowers'])) {
     print('Выберите способность.<br/>');
     $errors = TRUE;
 }
 else{
-  $abilities = $_POST['powers'];
+  $abilities = $_POST['superpowers'];
   foreach ($abilities as $ability) {
     if (!in_array($ability, $ability_data)) {
       print('Плохая способность!<br/>');
@@ -80,12 +80,12 @@ else if(intval($_POST['gender'])<0 || intval($_POST['gender'])>1)
     $errors = TRUE;
 }
 
-if(empty($_POST['bodyparts']))
+if(empty($_POST['limb']))
 {
     print('Выберите количество конечностей<br>');
     $errors = TRUE;
 }
-else if($_POST['bodyparts']<1 || $_POST['bodyparts']>4)
+else if($_POST['limb']<1 || $_POST['limb']>4)
 {
     print('Неверное количество конечностей<br>');
     $errors = TRUE;
