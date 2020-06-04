@@ -24,25 +24,25 @@
       <h6>Количество конечностей</h6>
       <div class="form-group row col-12 justify-content-between">
       	<div class="form-check">
-      <input type="radio" value=1 name="bodyparts" class="form-check-input">
+      <input type="radio" value=1 name="limb" class="form-check-input">
         <label for="one" class="form-check-label">1</label>
         </div>
         <div class="form-check">
-      <input type="radio" value=2 name="bodyparts" class="form-check-input">
+      <input type="radio" value=2 name="limb" class="form-check-input">
         <label for="two" class="form-check-label">2</label>
         </div>
         <div class="form-check">
-      <input type="radio" value=3 name="bodyparts" class="form-check-input">
+      <input type="radio" value=3 name="limb" class="form-check-input">
         <label for="three" class="form-check-label">3</label>
         </div>
         <div class="form-check">
-      <input type="radio" value=4 name="bodyparts" class="form-check-input">
+      <input type="radio" value=4 name="limb" class="form-check-input">
         <label for="four" class="form-check-label">4</label>
         </div>
         </div>
         <h6>Сверхспособности</h6>
         <div class="form-group">
-      <select multiple name="powers[]" class="form-control">
+      <select multiple name="superpowers[]" class="form-control">
         <option value=1>Бессмертие</option>
         <option value=2>Прохождение сквозь стены</option>
         <option value=3>Левитация</option>
