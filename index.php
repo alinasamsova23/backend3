@@ -1,6 +1,5 @@
-  
 <?php
-header('Content-Type: text/html; charset=UTF-8');
+header("Content-Type: text/html; charset=windows-1251");
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -9,9 +8,12 @@ header('Content-Type: text/html; charset=UTF-8');
     <title>Форма</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" 
+        crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css"
-        integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+        integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" 
+        crossorigin="anonymous">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
 <body class="container">
 
@@ -32,13 +34,10 @@ $errors = FALSE;
 <div class="col-12 col-md-6 jumbotron">
 <?php
 if (empty($_POST['name'])) {
-  print('Заполните имя.<br/>');
-  $errors = TRUE;
+    print('Заполните имя.<br/><script language=javascript>window.alert("name");</script>');
+    $errors = TRUE;
 }
-else if (!preg_match('/^[а-яА-Я ]+$/u', $_POST['name'])) {
-  print('Недопустимые символы в имени.<br/>');
-  $errors = TRUE;
-}
+
 if (empty($_POST['bio'])){
     print('Заполните биографию<br>');
     $errors = TRUE;
@@ -56,12 +55,12 @@ else {
 }
 
 $ability_data = array_keys($ability_labels);
-if (empty($_POST['superpowers'])) {
+if (empty($_POST['powers'])) {
     print('Выберите способность.<br/>');
     $errors = TRUE;
 }
 else{
-  $abilities = $_POST['superpowers'];
+  $abilities = $_POST['powers'];
   foreach ($abilities as $ability) {
     if (!in_array($ability, $ability_data)) {
       print('Плохая способность!<br/>');
@@ -80,12 +79,12 @@ else if(intval($_POST['gender'])<0 || intval($_POST['gender'])>1)
     $errors = TRUE;
 }
 
-if(empty($_POST['limb']))
+if(empty($_POST['bodyparts']))
 {
     print('Выберите количество конечностей<br>');
     $errors = TRUE;
 }
-else if($_POST['limb']<1 || $_POST['limb']>4)
+else if($_POST['bodyparts']<1 || $_POST['bodyparts']>4)
 {
     print('Неверное количество конечностей<br>');
     $errors = TRUE;
@@ -120,8 +119,8 @@ $user = 'u20236';
 $pass = '8398991';
 $db = new PDO('mysql:host=localhost;dbname=u20236', $user, $pass, array(PDO::ATTR_PERSISTENT => true));
 try {
-$stmt = $db->prepare("INSERT INTO application (name, year, powers, bio, gender, email, bodyparts) VALUES (?, ?, ?, ?, ?, ?, ?)");
-$stmt->execute(array($_POST['name'], intval($year), implode(',',$_POST['superpowers']), $_POST['bio'], intval($_POST['gender']), $_POST['email'], intval($_POST['limb'])));
+$stmt = $db->prepare("INSERT INTO application (name, email, year, gender, bodyparts, powers, bio) VALUES (?, ?, ?, ?, ?, ?, ?)");
+$stmt->execute(array($_POST['name'], intval($year), implode(',',$_POST['powers']), $_POST['bio'], intval($_POST['gender']), $_POST['email'], intval($_POST['bodyparts'])));
 }
 catch(PDOException $e){
   print('Error : ' . $e->getMessage());
