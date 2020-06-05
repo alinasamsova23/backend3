@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   if (!empty($_GET['save'])) {
     print('<div class="row justify-content-md-center p-4">Спасибо, результаты сохранены.<br></div>');
   }
-  include('form.php');
+  include('form.html');
   exit();
 }
 
